@@ -1,0 +1,161 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| college_1          |
+| harekrishna        |
+| information_schema |
+| kipilearn          |
+| mysql              |
+| nabin              |
+| pandav             |
+| performance_schema |
+| sys                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use kipilearn;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_kipilearn |
++---------------------+
+| book                |
+| borrow              |
+| employee            |
+| supp                |
+| user                |
++---------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-------------+--------+------+------------+--------+--------------+
+| Employee_id | Name   | Age  | Department | salary | joining_date |
++-------------+--------+------+------------+--------+--------------+
+|         101 | kiran  |   25 | HR         |  50000 | 2020-01-15   |
+|         102 | Rahul  |   30 | IT         |  60000 | 2019-06-20   |
+|         103 | Rima   |   35 | Finance    |  70000 | 2018-07-10   |
+|         104 | Babita |   40 | Marketing  |  80000 | 2021-03-25   |
+|         105 | Arka   |   28 | IT         |  55000 | 2022-09-05   |
++-------------+--------+------+------------+--------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select Name,salary from employee;
++--------+--------+
+| Name   | salary |
++--------+--------+
+| kiran  |  50000 |
+| Rahul  |  60000 |
+| Rima   |  70000 |
+| Babita |  80000 |
+| Arka   |  55000 |
++--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where department='IT';
++-------------+-------+------+------------+--------+--------------+
+| Employee_id | Name  | Age  | Department | salary | joining_date |
++-------------+-------+------+------------+--------+--------------+
+|         102 | Rahul |   30 | IT         |  60000 | 2019-06-20   |
+|         105 | Arka  |   28 | IT         |  55000 | 2022-09-05   |
++-------------+-------+------+------------+--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where salary>60,000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',000' at line 1
+mysql> select * from employee where salary>60000;
++-------------+--------+------+------------+--------+--------------+
+| Employee_id | Name   | Age  | Department | salary | joining_date |
++-------------+--------+------+------------+--------+--------------+
+|         103 | Rima   |   35 | Finance    |  70000 | 2018-07-10   |
+|         104 | Babita |   40 | Marketing  |  80000 | 2021-03-25   |
++-------------+--------+------+------------+--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee order by age asc;
++-------------+--------+------+------------+--------+--------------+
+| Employee_id | Name   | Age  | Department | salary | joining_date |
++-------------+--------+------+------------+--------+--------------+
+|         101 | kiran  |   25 | HR         |  50000 | 2020-01-15   |
+|         105 | Arka   |   28 | IT         |  55000 | 2022-09-05   |
+|         102 | Rahul  |   30 | IT         |  60000 | 2019-06-20   |
+|         103 | Rima   |   35 | Finance    |  70000 | 2018-07-10   |
+|         104 | Babita |   40 | Marketing  |  80000 | 2021-03-25   |
++-------------+--------+------+------------+--------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where age=(select min(age) from employee);
++-------------+-------+------+------------+--------+--------------+
+| Employee_id | Name  | Age  | Department | salary | joining_date |
++-------------+-------+------+------------+--------+--------------+
+|         101 | kiran |   25 | HR         |  50000 | 2020-01-15   |
++-------------+-------+------+------------+--------+--------------+
+1 row in set (0.01 sec)
+
+mysql> select count(employee_id) from employee group by department;
++--------------------+
+| count(employee_id) |
++--------------------+
+|                  1 |
+|                  2 |
+|                  1 |
+|                  1 |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(employee_id),department from employee group by department;
++--------------------+------------+
+| count(employee_id) | department |
++--------------------+------------+
+|                  1 | HR         |
+|                  2 | IT         |
+|                  1 | Finance    |
+|                  1 | Marketing  |
++--------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select avg(salary) from employee where department='IT';
++-------------+
+| avg(salary) |
++-------------+
+|  57500.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where joining_date<'2000-01-15';
+Empty set (0.01 sec)
+
+mysql> select * from employee where joining_date<'2020-01-15';
++-------------+-------+------+------------+--------+--------------+
+| Employee_id | Name  | Age  | Department | salary | joining_date |
++-------------+-------+------+------------+--------+--------------+
+|         102 | Rahul |   30 | IT         |  60000 | 2019-06-20   |
+|         103 | Rima  |   35 | Finance    |  70000 | 2018-07-10   |
++-------------+-------+------+------------+--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> tee:D\sql_day2.txt;
+--------------
+
+Connection id:		33
+Current database:	kipilearn
+Current user:		root@localhost
+SSL:			Cipher in use is TLS_AES_256_GCM_SHA384
+Using delimiter:	;
+Server version:		8.0.41 MySQL Community Server - GPL
+Protocol version:	10
+Connection:		localhost via TCP/IP
+Server characterset:	utf8mb4
+Db     characterset:	utf8mb4
+Client characterset:	cp850
+Conn.  characterset:	cp850
+TCP port:		3306
+Binary data as:		Hexadecimal
+Uptime:			5 days 6 hours 20 min 24 sec
+
+Threads: 4  Questions: 2035  Slow queries: 0  Opens: 473  Flush tables: 3  Open tables: 385  Queries per second avg: 0.004
+--------------
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tee:Dql_day2.txt' at line 1
+mysql> Terminal close -- exit!
